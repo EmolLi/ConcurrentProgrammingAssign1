@@ -19,20 +19,23 @@ public class CircleMgmt {
         if (c <= 0) {
             return null;    // no more circle
         }
+
+        circles[id] = null;
+        notify();
+
         // come up with a new circle
         Circle newCircle = new Circle(r);
 
 
         while (newCircle.overlap(circles[1 - id])) {
             try {
-                wait();
+                wait(10);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         c--;
         circles[id] = newCircle;
-        notify();
         return newCircle;
     }
 

@@ -30,11 +30,13 @@ public class CircleDrawingThread implements Runnable{
     @Override
     public void run() {
 
+
         Circle c = mgmt.drawNewCircle(this.id);
         while (c!= null){
             drawCircle(c.originX, c.originY, c.radius);
             c = mgmt.drawNewCircle(this.id);
         }
+
         System.out.println(this.id + " Done!");
     }
 

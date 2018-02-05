@@ -1,5 +1,4 @@
 package q1;
-
 import java.util.Map;
 
 /**
