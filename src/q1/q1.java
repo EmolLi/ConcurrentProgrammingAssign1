@@ -36,17 +36,21 @@ public class q1 {
                     img.setRGB(i,j,0);
                 }
             }
-
             mgmt = new CircleMgmt(r, c);
 
             Thread t0 = new Thread(new CircleDrawingThread(0, img, width, height, mgmt));
             Thread t1 = null;
-            t0.start();
+
 
             if (multithreaded) {
                 t1 = new Thread(new CircleDrawingThread(1, img, width, height, mgmt));
-                t1.start();
             }
+
+            // timing
+            long startTime = System.currentTimeMillis();
+            t0.start();
+            if (multithreaded) t1.start();
+
 
             // Write out the image
             try{
@@ -55,7 +59,9 @@ public class q1 {
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-            System.out.println("all done");
+            long timeDiff = System.currentTimeMillis() - startTime;
+
+            System.out.println("all done Time:" + timeDiff);
             File outputfile = new File("outputimage.png");
             ImageIO.write(img, "png", outputfile);
 
