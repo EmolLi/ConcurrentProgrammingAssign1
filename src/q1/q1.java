@@ -17,6 +17,7 @@ public class q1 {
     public static int c;
     public static boolean multithreaded;
     public static CircleMgmt mgmt;
+    public static int[][] drawing;
 
 
     public static void main(String[] args) {
@@ -31,19 +32,17 @@ public class q1 {
             multithreaded = Boolean.parseBoolean(args[2]);
             // create an image and initialize it to all 0's
             img = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
-            for (int i=0;i<width;i++) {
-                for (int j=0;j<height;j++) {
-                    img.setRGB(i,j,0);
-                }
-            }
+
+            drawing = new int[height][width];
+
             mgmt = new CircleMgmt(r, c);
 
-            Thread t0 = new Thread(new CircleDrawingThread(0, img, width, height, mgmt));
+            Thread t0 = new Thread(new CircleDrawingThread(0, drawing, width, height, mgmt));
             Thread t1 = null;
 
 
             if (multithreaded) {
-                t1 = new Thread(new CircleDrawingThread(1, img, width, height, mgmt));
+                t1 = new Thread(new CircleDrawingThread(1, drawing, width, height, mgmt));
             }
 
             // timing
@@ -59,6 +58,16 @@ public class q1 {
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
+
+            // paint
+            try{
+                for (int i = 0; i < height; i ++){
+                    img.setRGB(0, i, width, 1, drawing[i], 0, width);
+                }
+            }catch (Exception e){
+
+            }
+
             long timeDiff = System.currentTimeMillis() - startTime;
 
             System.out.println("all done Time:" + timeDiff);
